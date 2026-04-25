@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./stores/authStore";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Members from "./pages/Members";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -18,6 +19,7 @@ export default function App() {
           <PrivateRoute>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/members" element={<Dashboard />} />
             </Routes>
           </PrivateRoute>
         }
