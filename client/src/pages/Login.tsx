@@ -19,8 +19,18 @@ export default function Login() {
       setAuth(res.user, res.access_token, res.refresh_token);
       message.success("登录成功");
       navigate("/");
-    } catch {
-      message.error("登录失败，请检查邮箱和密码");
+    } catch (err: unknown) {
+      const resp = (err as { response?: { data?: { detail?: string } } })?.response?.data;
+      const detail = resp?.detail;
+      if (detail?.includes("pending")) {
+        message.warning("账号尚未通过管理员审核，请等待审核");
+      } else if (detail?.includes("rejected")) {
+        message.error("账号已被管理员拒绝");
+      } else if (detail?.includes("Invalid credentials")) {
+        message.error("邮箱或密码错误");
+      } else {
+        message.error("登录失败，请检查网络连接");
+      }
     } finally {
       setLoading(false);
     }
