@@ -1,10 +1,7 @@
 import { Layout, Menu, Button, Typography } from "antd";
 import { TeamOutlined, CalendarOutlined, SettingOutlined, LogoutOutlined } from "@ant-design/icons";
-import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
-import Members from "./Members";
-import TaskList from "./TaskList";
-import Settings from "./Settings";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -62,12 +59,7 @@ export default function Dashboard() {
           <Button icon={<LogoutOutlined />} onClick={handleLogout}>退出</Button>
         </Header>
         <Content style={{ margin: 24 }}>
-          <Routes>
-            <Route path="/" element={<div>欢迎使用排班管理系统</div>} />
-            <Route path="/members" element={<Members />} />
-            <Route path="/tasks" element={<TaskList />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
