@@ -3,6 +3,8 @@ import { TeamOutlined, CalendarOutlined, SettingOutlined, LogoutOutlined } from 
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
 import Members from "./Members";
+import TaskList from "./TaskList";
+import Settings from "./Settings";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -26,10 +28,19 @@ export default function Dashboard() {
   const onMenuClick = (info: { key: string }) => {
     if (info.key === "members") {
       navigate("/members");
+    } else if (info.key === "tasks") {
+      navigate("/tasks");
+    } else if (info.key === "settings") {
+      navigate("/settings");
     }
   };
 
-  const selectedKey = location.pathname === "/members" ? "members" : "";
+  const pathToKey: Record<string, string> = {
+    "/members": "members",
+    "/tasks": "tasks",
+    "/settings": "settings",
+  };
+  const selectedKey = pathToKey[location.pathname] || "";
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -54,6 +65,8 @@ export default function Dashboard() {
           <Routes>
             <Route path="/" element={<div>欢迎使用排班管理系统</div>} />
             <Route path="/members" element={<Members />} />
+            <Route path="/tasks" element={<TaskList />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </Content>
       </Layout>
