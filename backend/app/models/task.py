@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from datetime import date, datetime
-from typing import Optional, list
+from typing import Optional
 from sqlalchemy import String, Integer, DateTime, Date, Text, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -22,4 +24,4 @@ class Task(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
-    slots: Mapped[list["Slot"]] = relationship("Slot", backref="task", lazy="selectin", cascade="all, delete-orphan")
+    slots: Mapped[list[Slot]] = relationship("Slot", backref="task", lazy="selectin", cascade="all, delete-orphan")
